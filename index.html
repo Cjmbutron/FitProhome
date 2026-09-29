@@ -105,7 +105,7 @@
                 </div>
             </div>
 
-            <!-- Métricas Clave (Grid) -->
+            <!-- Métricas Clave -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-xl">
                     <div class="flex items-center justify-between text-slate-400 mb-1">
@@ -147,9 +147,7 @@
                     <h3 class="font-bold text-sm text-slate-200">Semana en Curso</h3>
                     <span class="text-xs text-slate-400" id="current-date-str">--</span>
                 </div>
-                <div class="grid grid-cols-7 gap-1.5 text-center" id="weekly-calendar-grid">
-                    <!-- Generado por JS -->
-                </div>
+                <div class="grid grid-cols-7 gap-1.5 text-center" id="weekly-calendar-grid"></div>
             </div>
         </section>
 
@@ -164,10 +162,7 @@
                     Semana 1
                 </div>
             </div>
-
-            <div class="space-y-4" id="program-workouts-list">
-                <!-- Tarjetas de entrenamientos del programa -->
-            </div>
+            <div class="space-y-4" id="program-workouts-list"></div>
         </section>
 
         <!-- VISTA: HISTORIAL -->
@@ -180,86 +175,91 @@
                     </select>
                 </div>
             </div>
-            
-            <div id="history-list" class="space-y-3">
-                <!-- Listado de historial dinámico -->
-            </div>
+            <div id="history-list" class="space-y-3"></div>
         </section>
 
         <!-- VISTA: PROGRESO -->
         <section id="view-progress" class="hidden space-y-6">
             <h2 class="text-xl font-black text-white">Evolución y Récords</h2>
-            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-2xl">
                     <h3 class="text-sm font-bold text-slate-300 mb-3">Peso Corporal (kg)</h3>
-                    <div class="h-48 relative">
-                        <canvas id="chartBodyWeight"></canvas>
-                    </div>
+                    <div class="h-48 relative"><canvas id="chartBodyWeight"></canvas></div>
                 </div>
                 <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-2xl">
                     <h3 class="text-sm font-bold text-slate-300 mb-3">Entrenamientos Completados por Semana</h3>
-                    <div class="h-48 relative">
-                        <canvas id="chartWeeklyWorkouts"></canvas>
-                    </div>
+                    <div class="h-48 relative"><canvas id="chartWeeklyWorkouts"></canvas></div>
                 </div>
             </div>
-
             <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-2xl">
                 <h3 class="text-sm font-bold text-slate-300 mb-3">Récords y Progresión por Ejercicio</h3>
                 <div class="mb-3">
-                    <select id="progress-exercise-select" onchange="renderExerciseProgressChart()" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 w-full">
-                    </select>
+                    <select id="progress-exercise-select" onchange="renderExerciseProgressChart()" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 w-full"></select>
                 </div>
-                <div class="h-56 relative mb-4">
-                    <canvas id="chartExerciseProgress"></canvas>
-                </div>
-                <div id="exercise-record-card" class="bg-slate-900/80 border border-slate-700/50 p-4 rounded-xl text-xs space-y-2">
-                    <!-- Mejor registro -->
-                </div>
+                <div class="h-56 relative mb-4"><canvas id="chartExerciseProgress"></canvas></div>
+                <div id="exercise-record-card" class="bg-slate-900/80 border border-slate-700/50 p-4 rounded-xl text-xs space-y-2"></div>
             </div>
         </section>
 
-        <!-- VISTA: CARDIO / CRONÓMETRO -->
+        <!-- VISTA: CARDIO / CRONÓMETRO GUIADO -->
         <section id="view-cardio" class="hidden space-y-6">
             <div class="text-center space-y-2">
-                <h2 class="text-xl font-black text-white">Cronómetro de Resistencia / Cardio</h2>
-                <p class="text-xs text-slate-400">Ideal para sesiones de 20–25 minutos (Modo continuo o intervalos)</p>
+                <h2 class="text-xl font-black text-white">Cronómetro de Cardio Guiado (Intervalos)</h2>
+                <p class="text-xs text-slate-400">Guía automática de 20 minutos (Calentamiento + 6 Intervalos + Recuperación)</p>
             </div>
 
-            <div class="bg-slate-800/90 border border-slate-700/80 rounded-3xl p-6 max-w-md mx-auto text-center shadow-2xl relative">
-                <div class="text-5xl md:text-6xl font-black text-white tracking-widest my-6 font-mono" id="cardio-timer-display">
-                    00:00
+            <div class="bg-slate-800/90 border border-slate-700/80 rounded-3xl p-6 max-w-md mx-auto text-center shadow-2xl relative space-y-4">
+                <div id="cardio-phase-badge" class="inline-block bg-brand-500/20 text-brand-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    Listo para iniciar
                 </div>
-                <div class="text-xs text-brand-400 font-medium mb-6 uppercase tracking-wider" id="cardio-status-label">Listo para iniciar</div>
                 
-                <div class="flex justify-center space-x-3 mb-6">
-                    <button onclick="startCardioTimer()" id="cardio-start-btn" class="bg-brand-500 hover:bg-brand-600 text-slate-950 font-bold px-6 py-3 rounded-xl flex items-center space-x-2 transition shadow-lg shadow-brand-500/20">
-                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
-                        <span>Iniciar</span>
-                    </button>
-                    <button onclick="pauseCardioTimer()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold px-5 py-3 rounded-xl transition">
-                        Pausar
-                    </button>
-                    <button onclick="resetCardioTimer()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold px-5 py-3 rounded-xl transition">
-                        Reiniciar
-                    </button>
+                <div class="text-5xl md:text-6xl font-black text-white tracking-widest my-4 font-mono" id="cardio-timer-display">
+                    20:00
                 </div>
 
-                <div class="border-t border-slate-700 pt-4 text-left">
-                    <h4 class="text-xs font-bold text-slate-300 mb-2">Guía de Intervalos Recomendada (20 min):</h4>
-                    <ul class="text-[11px] text-slate-400 space-y-1">
-                        <li>• 5 min calentamiento suave</li>
-                        <li>• 6 ciclos de (1 min rápido + 2 min suave)</li>
-                        <li>• 5 min recuperación final</li>
-                    </ul>
+                <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/50 text-xs text-slate-300" id="cardio-instruction-text">
+                    Pulsa Iniciar para comenzar la sesión guiada de intervalos.
+                </div>
+                
+                <div class="flex justify-center space-x-3 pt-2">
+                    <button onclick="startGuidedCardio()" id="cardio-start-btn" class="bg-brand-500 hover:bg-brand-600 text-slate-950 font-bold px-6 py-3 rounded-xl flex items-center space-x-2 transition shadow-lg shadow-brand-500/20">
+                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                        <span id="cardio-btn-text">Iniciar Guía</span>
+                    </button>
+                    <button onclick="pauseGuidedCardio()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold px-5 py-3 rounded-xl transition">
+                        Pausar
+                    </button>
+                    <button onclick="resetGuidedCardio()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold px-5 py-3 rounded-xl transition">
+                        Reiniciar
+                    </button>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- MODAL DE ENTRENAMIENTO ACTIVO -->
+    <!-- MODAL DE CALENTAMIENTO GUIADO (FUERZA) -->
+    <div id="warmup-modal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-md w-full space-y-5 text-center shadow-2xl">
+            <div class="w-14 h-14 bg-brand-500/20 text-brand-400 rounded-2xl flex items-center justify-center mx-auto">
+                <i data-lucide="flame" class="w-8 h-8"></i>
+            </div>
+            <div>
+                <span class="text-xs text-brand-400 font-bold uppercase tracking-wider">Fase Previa</span>
+                <h3 class="text-xl font-black text-white mt-1">Calentamiento Articular (4 min)</h3>
+            </div>
+            <p class="text-xs text-slate-300">Movilidad articular de hombros, caderas, rodillas y activadores suaves antes de comenzar los bloques de fuerza.</p>
+            
+            <div class="text-4xl font-black text-white font-mono my-3" id="warmup-timer-display">04:00</div>
+
+            <div class="flex space-x-2">
+                <button onclick="skipWarmup()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-3 rounded-xl font-bold">Saltar Calentamiento</button>
+                <button onclick="startWarmupTimer()" id="warmup-action-btn" class="flex-1 bg-brand-500 hover:bg-brand-600 text-slate-950 text-xs py-3 rounded-xl font-bold">Iniciar Cronómetro</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE ENTRENAMIENTO ACTIVO (FUERZA) -->
     <div id="workout-active-modal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md hidden flex flex-col">
         <div class="bg-slate-900 border-b border-slate-800 px-4 py-3 flex items-center justify-between">
             <div>
@@ -273,7 +273,6 @@
 
         <div class="flex-1 max-w-xl w-full mx-auto p-4 overflow-y-auto space-y-6 flex flex-col justify-between">
             <div class="space-y-6">
-                <!-- Indicador de Progreso del Ejercicio -->
                 <div class="flex justify-between items-center text-xs text-slate-400">
                     <span id="active-exercise-counter">Ejercicio 1 de 5</span>
                     <span id="active-target-hint" class="bg-slate-800 px-2.5 py-1 rounded-lg text-slate-300 font-medium">Objetivo: 3 × 10–15 reps</span>
@@ -284,7 +283,6 @@
                     <p id="active-exercise-instructions" class="text-xs text-slate-300">Mantén la espalda recta y baja de forma controlada.</p>
                 </div>
 
-                <!-- Tabla de Series -->
                 <div class="space-y-3">
                     <div class="grid grid-cols-12 gap-2 text-xs font-bold text-slate-400 px-2">
                         <div class="col-span-2 text-center">Serie</div>
@@ -292,12 +290,9 @@
                         <div class="col-span-3 text-center">Peso (kg)</div>
                         <div class="col-span-3 text-center">Acción</div>
                     </div>
-                    <div id="active-sets-container" class="space-y-2">
-                        <!-- Generado por JS -->
-                    </div>
+                    <div id="active-sets-container" class="space-y-2"></div>
                 </div>
 
-                <!-- Temporizador de Descanso Integrado -->
                 <div id="rest-timer-box" class="bg-slate-800 border border-slate-700 rounded-2xl p-4 text-center hidden">
                     <div class="text-xs text-brand-400 font-bold mb-1 uppercase tracking-wider">Tiempo de Descanso</div>
                     <div class="text-3xl font-black text-white font-mono my-2" id="rest-countdown">00:45</div>
@@ -307,7 +302,6 @@
                 </div>
             </div>
 
-            <!-- Botones de Navegación del Ejercicio -->
             <div class="pt-4 border-t border-slate-800 flex space-x-3">
                 <button onclick="prevExercise()" id="btn-prev-ex" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3.5 rounded-xl transition text-sm">Anterior</button>
                 <button onclick="nextExercise()" id="btn-next-ex" class="flex-1 bg-brand-500 hover:bg-brand-600 text-slate-950 font-bold py-3.5 rounded-xl transition text-sm shadow-lg shadow-brand-500/20">Siguiente Ejercicio</button>
@@ -332,12 +326,8 @@
                 <div class="flex justify-between"><span class="text-slate-400">Series completadas:</span> <span id="summary-sets-count" class="font-bold text-white">15 / 15</span></div>
             </div>
 
-            <!-- Sugerencia de Progresión Conservadora -->
-            <div id="progression-suggestion-box" class="bg-brand-500/10 border border-brand-500/30 p-3.5 rounded-xl text-xs text-brand-300">
-                <!-- Generado por JS -->
-            </div>
+            <div id="progression-suggestion-box" class="bg-brand-500/10 border border-brand-500/30 p-3.5 rounded-xl text-xs text-brand-300"></div>
 
-            <!-- Campos Opcionales -->
             <div class="space-y-3">
                 <div>
                     <label class="block text-[11px] font-medium text-slate-400 mb-1">¿Cómo te sentiste después del entrenamiento?</label>
@@ -377,16 +367,13 @@
                 <h3 class="text-lg font-black text-white">Configuración y Datos</h3>
                 <button onclick="closeSettingsModal()" class="p-1.5 text-slate-400 hover:text-white bg-slate-800 rounded-xl"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
-
             <div class="space-y-3 text-xs">
                 <div class="bg-slate-800/60 p-3.5 rounded-xl border border-slate-700/50 space-y-2">
                     <span class="font-bold text-slate-200 block">Descanso entre series (segundos)</span>
                     <input type="number" id="setting-rest-time" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-100" value="45">
                 </div>
-
                 <div class="bg-slate-800/60 p-3.5 rounded-xl border border-slate-700/50 space-y-2">
                     <span class="font-bold text-slate-200 block">Respaldo de Datos (JSON)</span>
-                    <p class="text-[11px] text-slate-400">Exporta tu historial y registros locales o impórtalos en otro dispositivo.</p>
                     <div class="flex space-x-2 pt-1">
                         <button onclick="exportDataJSON()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-200 py-2 rounded-lg font-bold flex items-center justify-center space-x-1"><i data-lucide="download" class="w-3.5 h-3.5"></i><span>Exportar</span></button>
                         <label class="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-200 py-2 rounded-lg font-bold flex items-center justify-center space-x-1 cursor-pointer">
@@ -395,7 +382,6 @@
                         </label>
                     </div>
                 </div>
-
                 <div class="pt-2">
                     <button onclick="resetAllData()" class="w-full bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 py-2.5 rounded-xl font-bold transition">Reiniciar todos los datos</button>
                 </div>
@@ -405,7 +391,6 @@
 
     <!-- LÓGICA DE LA APLICACIÓN -->
     <script>
-        // --- DEFINICIÓN DEL PROGRAMA DE 8 SEMANAS ---
         const PROGRAM_EXERCISES = {
             "Fuerza A": {
                 type: "Fuerza A",
@@ -441,11 +426,7 @@
             }
         };
 
-        // Patrón semanal alterno para las 8 semanas
-        // Semana 1, 3, 5, 7: L: Fuerza A, M: Resistencia, Mi: Fuerza B, V: Fuerza A, S: Cardio opcional
-        // Semana 2, 4, 6, 8: L: Fuerza B, M: Resistencia, Mi: Fuerza A, V: Fuerza B, S: Cardio opcional
         function getWorkoutForDay(weekNum, dayOfWeek) {
-            // dayOfWeek: 1=Lunes, 2=Martes, 3=Miércoles, 4=Jueves, 5=Viernes, 6=Sábado, 0=Domingo
             const isOddWeek = weekNum % 2 !== 0;
             if (dayOfWeek === 1) return isOddWeek ? "Fuerza A" : "Fuerza B";
             if (dayOfWeek === 2) return "Resistencia";
@@ -456,7 +437,6 @@
             return "Descanso";
         }
 
-        // --- ESTADO LOCAL ---
         let appState = {
             startDate: localStorage.getItem('fithome_start_date') || new Date().toISOString(),
             bodyWeights: JSON.parse(localStorage.getItem('fithome_body_weights') || JSON.stringify([{ date: new Date().toISOString().split('T')[0], weight: 68.0 }])),
@@ -464,16 +444,48 @@
             settings: JSON.parse(localStorage.getItem('fithome_settings') || JSON.stringify({ restTime: 45, darkMode: true }))
         };
 
-        let currentActiveWorkout = null;
         let currentExerciseIndex = 0;
         let activeWorkoutData = null;
         let restTimerInterval = null;
-        let cardioTimerInterval = null;
-        let cardioSeconds = 0;
-        let cardioRunning = false;
-        let chartsInstance = {};
+        let warmupTimerInterval = null;
+        let warmupSeconds = 240; // 4 minutos de calentamiento
+        
+        // Estado Cardio Guiado por intervalos
+        let guidedCardioInterval = null;
+        let guidedCardioSeconds = 0;
+        let guidedCardioRunning = false;
+        let currentCardioPhaseIndex = 0;
 
-        // --- INICIALIZACIÓN ---
+        // Fases de Cardio de 20 minutos (Total 1200s)
+        // 0: Calentamiento (300s / 5 min)
+        // 1 al 6: 6 Ciclos de (1 min rápido [60s] + 2 min suave [120s])
+        // 7: Recuperación final (300s / 5 min)
+        const cardioPhases = [
+            { name: "Calentamiento suave", duration: 300, instruction: "Mantén un ritmo suave y constante para preparar el cuerpo." },
+            // Ciclo 1
+            { name: "Intervalo Rápido 1/6", duration: 60, instruction: "¡Acelera el ritmo al máximo tolerable!" },
+            { name: "Intervalo Suave 1/6", duration: 120, instruction: "Ritmo moderado de recuperación." },
+            // Ciclo 2
+            { name: "Intervalo Rápido 2/6", duration: 60, instruction: "¡Acelera el ritmo!" },
+            { name: "Intervalo Suave 2/6", duration: 120, instruction: "Ritmo moderado de recuperación." },
+            // Ciclo 3
+            { name: "Intervalo Rápido 3/6", duration: 60, instruction: "¡Acelera el ritmo!" },
+            { name: "Intervalo Suave 3/6", duration: 120, instruction: "Ritmo moderado de recuperación." },
+            // Ciclo 4
+            { name: "Intervalo Rápido 4/6", duration: 60, instruction: "¡Acelera el ritmo!" },
+            { name: "Intervalo Suave 4/6", duration: 120, instruction: "Ritmo moderado de recuperación." },
+            // Ciclo 5
+            { name: "Intervalo Rápido 5/6", duration: 60, instruction: "¡Acelera el ritmo!" },
+            { name: "Intervalo Suave 5/6", duration: 120, instruction: "Ritmo moderado de recuperación." },
+            // Ciclo 6
+            { name: "Intervalo Rápido 6/6", duration: 60, instruction: "¡Último intervalo rápido!" },
+            { name: "Intervalo Suave 6/6", duration: 120, instruction: "Ritmo moderado de recuperación." },
+            // Final
+            { name: "Recuperación Final", duration: 300, instruction: "Disminuye la intensidad progresivamente para enfriar." }
+        ];
+
+        let totalCardioTargetSeconds = cardioPhases.reduce((acc, p) => acc + p.duration, 0);
+
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             initTheme();
@@ -482,8 +494,6 @@
             renderHistoryFilterOptions();
             renderHistory();
             initCharts();
-            
-            // Sincronizar configuración de descanso
             document.getElementById('setting-rest-time').value = appState.settings.restTime;
         });
 
@@ -494,7 +504,6 @@
             localStorage.setItem('fithome_start_date', appState.startDate);
         }
 
-        // --- CÁLCULO DE SEMANA ACTUAL ---
         function getCurrentProgramWeek() {
             const start = new Date(appState.startDate);
             const now = new Date();
@@ -503,7 +512,6 @@
             return Math.max(1, Math.min(8, week));
         }
 
-        // --- TABS / NAVEGACIÓN ---
         function switchTab(tabId) {
             ['dashboard', 'program', 'history', 'progress', 'cardio'].forEach(t => {
                 document.getElementById(`view-${t}`).classList.add('hidden');
@@ -523,7 +531,6 @@
             if (tabId === 'progress') updateChartsData();
         }
 
-        // --- DASHBOARD ---
         function updateDashboard() {
             const week = getCurrentProgramWeek();
             document.getElementById('header-program-week').textContent = `Semana ${week} • Ciclo 8 Semanas`;
@@ -531,7 +538,7 @@
             document.getElementById('program-week-badge').textContent = `Semana ${week}`;
 
             const now = new Date();
-            const dayOfWeek = now.getDay(); // 0=Dom, 1=Lun...
+            const dayOfWeek = now.getDay();
             const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
             document.getElementById('dash-day-label').textContent = `Hoy • ${dayNames[dayOfWeek]}`;
             document.getElementById('current-date-str').textContent = now.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
@@ -544,9 +551,9 @@
             if (workoutName.includes("Fuerza")) {
                 desc = PROGRAM_EXERCISES[workoutName].exercises.map(e => e.name).join(', ');
             } else if (workoutName === "Resistencia") {
-                desc = "Sesión de cardio de 20–25 minutos con intervalos moderados.";
+                desc = "Sesión guiada de intervalos de 20 minutos.";
             } else if (workoutName === "Cardio Opcional") {
-                desc = "Cardio ligero opcional o caminata al aire libre.";
+                desc = "Cardio ligero opcional.";
             } else {
                 canStart = false;
             }
@@ -562,7 +569,6 @@
                 actionContainer.innerHTML = `<div class="bg-slate-800/80 p-3 rounded-xl text-center text-xs text-slate-400 font-medium">Día de descanso programado. ¡Recupera energías!</div>`;
             }
 
-            // Estadísticas semanales
             const currentWeekWorkouts = appState.history.filter(h => {
                 const hDate = new Date(h.date);
                 const diffTime = Math.abs(now - hDate);
@@ -574,17 +580,13 @@
             const compliance = Math.min(100, Math.round((completedCount / 4) * 100));
             document.getElementById('stat-compliance').textContent = `${compliance}% cumplimiento`;
 
-            // Peso corporal actual
             if (appState.bodyWeights.length > 0) {
                 const latestWeight = appState.bodyWeights[appState.bodyWeights.length - 1].weight;
                 document.getElementById('stat-body-weight').textContent = `${latestWeight.toFixed(1)} kg`;
                 document.getElementById('input-new-weight').value = latestWeight;
             }
 
-            // Racha
             document.getElementById('stat-streak').textContent = `${calculateStreak()} días`;
-
-            // Calendario Semanal
             renderWeeklyCalendar(dayOfWeek);
             lucide.createIcons();
         }
@@ -592,9 +594,7 @@
         function calculateStreak() {
             if (appState.history.length === 0) return 0;
             let streak = 0;
-            const today = new Date().toISOString().split('T')[0];
             let checkDate = new Date();
-            
             for (let i = 0; i < 30; i++) {
                 const dateStr = checkDate.toISOString().split('T')[0];
                 const trained = appState.history.some(h => h.date.startsWith(dateStr));
@@ -613,8 +613,6 @@
             grid.innerHTML = '';
             const daysShort = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
             const week = getCurrentProgramWeek();
-
-            // Encontrar el lunes de esta semana
             const now = new Date();
             const currentDay = now.getDay();
             const mondayOffset = currentDay === 0 ? -6 : 1 - currentDay;
@@ -644,11 +642,9 @@
             }
         }
 
-        // --- VISTA PROGRAMA ---
         function renderProgramView() {
             const list = document.getElementById('program-workouts-list');
             list.innerHTML = '';
-            
             ['Fuerza A', 'Fuerza B', 'Resistencia'].forEach(key => {
                 const prog = PROGRAM_EXERCISES[key];
                 list.innerHTML += `
@@ -671,13 +667,20 @@
             });
         }
 
-        // --- FLUJO DE ENTRENAMIENTO ACTIVO ---
+        // --- FLUJO DE FUERZA (CON CALENTAMIENTO GUIADO) ---
         function startTodayWorkout() {
             const week = getCurrentProgramWeek();
             const workoutName = getWorkoutForDay(week, new Date().getDay());
             let wType = workoutName;
-            if (workoutName === 'Cardio Opcional') wType = 'Resistencia';
-            if (workoutName === 'Descanso') wType = 'Fuerza A'; // Por si decide entrenar en descanso
+            if (workoutName === 'Cardio Opcional') {
+                switchTab('cardio');
+                return;
+            }
+            if (workoutName === 'Resistencia') {
+                switchTab('cardio');
+                return;
+            }
+            if (workoutName === 'Descanso') wType = 'Fuerza A';
 
             const template = PROGRAM_EXERCISES[wType] || PROGRAM_EXERCISES['Fuerza A'];
             
@@ -693,8 +696,45 @@
                 }))
             };
 
+            // Mostrar primero el modal de calentamiento guiado de 4 minutos
+            openWarmupModal();
+        }
+
+        function openWarmupModal() {
+            warmupSeconds = 240;
+            updateWarmupDisplay();
+            document.getElementById('warmup-modal').classList.remove('hidden');
+        }
+
+        function updateWarmupDisplay() {
+            const mins = Math.floor(warmupSeconds / 60);
+            const secs = warmupSeconds % 60;
+            document.getElementById('warmup-timer-display').textContent = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        function startWarmupTimer() {
+            const btn = document.getElementById('warmup-action-btn');
+            btn.textContent = "En curso...";
+            btn.disabled = true;
+
+            if (warmupTimerInterval) clearInterval(warmupTimerInterval);
+            warmupTimerInterval = setInterval(() => {
+                warmupSeconds--;
+                updateWarmupDisplay();
+                if (warmupSeconds <= 0) {
+                    clearInterval(warmupTimerInterval);
+                    skipWarmup();
+                }
+            }, 1000);
+        }
+
+        function skipWarmup() {
+            if (warmupTimerInterval) clearInterval(warmupTimerInterval);
+            document.getElementById('warmup-modal').classList.add('hidden');
+            
+            // Iniciar ejercicio de fuerza real
             currentExerciseIndex = 0;
-            document.getElementById('active-modal-subtitle').textContent = `Semana ${week} • ${wType}`;
+            document.getElementById('active-modal-subtitle').textContent = `Semana ${getCurrentProgramWeek()} • ${activeWorkoutData.type}`;
             document.getElementById('workout-active-modal').classList.remove('hidden');
             renderActiveExercise();
         }
@@ -737,7 +777,6 @@
                 `;
             });
 
-            // Botones navegación
             document.getElementById('btn-prev-ex').style.display = currentExerciseIndex === 0 ? 'none' : 'block';
             const nextBtn = document.getElementById('btn-next-ex');
             if (currentExerciseIndex === activeWorkoutData.exercises.length - 1) {
@@ -757,10 +796,7 @@
             const set = activeWorkoutData.results[currentExerciseIndex].sets[setIdx];
             set.completed = !set.completed;
             renderActiveExercise();
-
-            if (set.completed) {
-                triggerRestTimer();
-            }
+            if (set.completed) triggerRestTimer();
         }
 
         function nextExercise() {
@@ -777,7 +813,6 @@
             }
         }
 
-        // --- TEMPORIZADOR DE DESCANSO ---
         function triggerRestTimer() {
             const restBox = document.getElementById('rest-timer-box');
             restBox.classList.remove('hidden');
@@ -786,7 +821,6 @@
             countDisplay.textContent = `00:${timeLeft < 10 ? '0' : ''}${timeLeft}`;
 
             if (restTimerInterval) clearInterval(restTimerInterval);
-
             restTimerInterval = setInterval(() => {
                 timeLeft--;
                 countDisplay.textContent = `00:${timeLeft < 10 ? '0' : ''}${timeLeft}`;
@@ -807,11 +841,9 @@
             document.getElementById('workout-active-modal').classList.add('hidden');
         }
 
-        // --- RESUMEN Y PROGRESIÓN ---
         function finishWorkoutPrompt() {
             if (restTimerInterval) clearInterval(restTimerInterval);
             document.getElementById('workout-active-modal').classList.add('hidden');
-            
             document.getElementById('summary-type').textContent = activeWorkoutData.type;
             document.getElementById('summary-duration').textContent = `${activeWorkoutData.durationMinutes} min`;
             
@@ -824,18 +856,13 @@
                 });
             });
             document.getElementById('summary-sets-count').textContent = `${completedSets} / ${totalSets}`;
-
-            // Evaluar progresión conservadora
             evaluateConservativeProgression();
-
             document.getElementById('workout-summary-modal').classList.remove('hidden');
         }
 
         function evaluateConservativeProgression() {
             const box = document.getElementById('progression-suggestion-box');
             let suggestion = "Buen trabajo completando las series. Mantén el peso e intenta aumentar gradualmente las repeticiones.";
-            
-            // Buscar si se logró el máximo en sentadillas o flexiones
             let maxAchieved = false;
             activeWorkoutData.results.forEach(ex => {
                 if (ex.name === "Sentadillas" || ex.name === "Flexiones") {
@@ -843,24 +870,17 @@
                     if (allMax) maxAchieved = true;
                 }
             });
-
             if (maxAchieved) {
                 suggestion = "¡Excelente rendimiento! Has alcanzado el límite superior con buena consistencia. Puedes aumentar ligeramente la dificultad o el peso en la próxima sesión.";
             }
-
             box.innerHTML = `<div class="font-bold mb-1">Sugerencia de Progresión:</div><div>${suggestion}</div>`;
         }
 
         function finishAndSaveWorkout() {
-            const feeling = document.getElementById('input-post-feeling').value;
-            const notes = document.getElementById('input-post-notes').value;
-
-            activeWorkoutData.feeling = feeling;
-            activeWorkoutData.notes = notes;
-
+            activeWorkoutData.feeling = document.getElementById('input-post-feeling').value;
+            activeWorkoutData.notes = document.getElementById('input-post-notes').value;
             appState.history.unshift(activeWorkoutData);
             saveData();
-
             document.getElementById('workout-summary-modal').classList.add('hidden');
             updateDashboard();
             renderHistory();
@@ -868,39 +888,104 @@
             switchTab('dashboard');
         }
 
-        // --- HISTORIAL ---
+        // --- CARDIO GUIADO POR INTERVALOS ---
+        function startGuidedCardio() {
+            if (guidedCardioRunning) return;
+            guidedCardioRunning = true;
+            document.getElementById('cardio-start-btn').classList.add('opacity-50');
+            
+            guidedCardioInterval = setInterval(() => {
+                guidedCardioSeconds++;
+                
+                // Calcular fase actual
+                let accumulated = 0;
+                let foundPhase = cardioPhases[cardioPhases.length - 1];
+                let phaseIdx = cardioPhases.length - 1;
+
+                for (let i = 0; i < cardioPhases.length; i++) {
+                    accumulated += cardioPhases[i].duration;
+                    if (guidedCardioSeconds <= accumulated) {
+                        foundPhase = cardioPhases[i];
+                        phaseIdx = i;
+                        break;
+                    }
+                }
+
+                currentCardioPhaseIndex = phaseIdx;
+                
+                // Actualizar UI
+                document.getElementById('cardio-phase-badge').textContent = foundPhase.name;
+                document.getElementById('cardio-instruction-text').textContent = foundPhase.instruction;
+
+                // Tiempo restante global
+                let remainingGlobal = totalCardioTargetSeconds - guidedCardioSeconds;
+                if (remainingGlobal < 0) remainingGlobal = 0;
+                
+                const mins = Math.floor(remainingGlobal / 60);
+                const secs = remainingGlobal % 60;
+                document.getElementById('cardio-timer-display').textContent = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+
+                if (guidedCardioSeconds >= totalCardioTargetSeconds) {
+                    clearInterval(guidedCardioInterval);
+                    guidedCardioRunning = false;
+                    alert("¡Sesión de cardio guiado completada con éxito!");
+
+                    // Guardar en historial automáticamente
+                    appState.history.unshift({
+                        type: "Resistencia (Cardio)",
+                        date: new Date().toISOString(),
+                        durationMinutes: 20,
+                        feeling: "Completado guiado",
+                        notes: "Sesión de intervalos finalizada",
+                        results: [{ name: "Cardio Guiado", type: "time", sets: [{ seconds: 1200, completed: true }] }]
+                    });
+                    saveData();
+                    updateDashboard();
+                    renderHistory();
+                }
+            }, 1000);
+        }
+
+        function pauseGuidedCardio() {
+            guidedCardioRunning = false;
+            clearInterval(guidedCardioInterval);
+            document.getElementById('cardio-start-btn').classList.remove('opacity-50');
+            document.getElementById('cardio-phase-badge').textContent = "Pausado";
+        }
+
+        function resetGuidedCardio() {
+            guidedCardioRunning = false;
+            clearInterval(guidedCardioInterval);
+            guidedCardioSeconds = 0;
+            currentCardioPhaseIndex = 0;
+            document.getElementById('cardio-start-btn').classList.remove('opacity-50');
+            document.getElementById('cardio-phase-badge').textContent = "Listo para iniciar";
+            document.getElementById('cardio-instruction-text').textContent = "Pulsa Iniciar para comenzar la sesión guiada de intervalos.";
+            document.getElementById('cardio-timer-display').textContent = "20:00";
+        }
+
+        // --- HISTORIAL Y GRÁFICOS (MANTENIDOS) ---
         function renderHistoryFilterOptions() {
             const select = document.getElementById('history-filter-exercise');
             const exercisesSet = new Set();
-            appState.history.forEach(h => {
-                h.results.forEach(r => exercisesSet.add(r.name));
-            });
-
+            appState.history.forEach(h => h.results.forEach(r => exercisesSet.add(r.name)));
             let html = '<option value="all">Todos los ejercicios</option>';
-            exercisesSet.forEach(exName => {
-                html += `<option value="${exName}">${exName}</option>`;
-            });
+            exercisesSet.forEach(exName => html += `<option value="${exName}">${exName}</option>`);
             select.innerHTML = html;
         }
 
         function renderHistory() {
             const list = document.getElementById('history-list');
             const filterVal = document.getElementById('history-filter-exercise')?.value || 'all';
-            
-            const filtered = appState.history.filter(h => {
-                if (filterVal === 'all') return true;
-                return h.results.some(r => r.name === filterVal);
-            });
+            const filtered = appState.history.filter(h => filterVal === 'all' || h.results.some(r => r.name === filterVal));
 
             if (filtered.length === 0) {
-                list.innerHTML = `<div class="bg-slate-800/60 p-6 rounded-2xl text-center text-xs text-slate-400">No hay entrenamientos registrados todavía. ¡Comienza el primero hoy!</div>`;
+                list.innerHTML = `<div class="bg-slate-800/60 p-6 rounded-2xl text-center text-xs text-slate-400">No hay entrenamientos registrados todavía.</div>`;
                 return;
             }
 
             list.innerHTML = filtered.map(h => {
-                const dateObj = new Date(h.date);
-                const dateStr = dateObj.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
-                
+                const dateStr = new Date(h.date).toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
                 return `
                     <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-4 space-y-3">
                         <div class="flex justify-between items-start">
@@ -924,41 +1009,8 @@
             }).join('');
         }
 
-        // --- CRONÓMETRO DE CARDIO ---
-        function startCardioTimer() {
-            if (cardioRunning) return;
-            cardioRunning = true;
-            document.getElementById('cardio-status-label').textContent = "Sesión en curso...";
-            cardioTimerInterval = setInterval(() => {
-                cardioSeconds++;
-                updateCardioDisplay();
-            }, 1000);
-        }
-
-        function pauseCardioTimer() {
-            cardioRunning = false;
-            clearInterval(cardioTimerInterval);
-            document.getElementById('cardio-status-label').textContent = "Pausado";
-        }
-
-        function resetCardioTimer() {
-            cardioRunning = false;
-            clearInterval(cardioTimerInterval);
-            cardioSeconds = 0;
-            updateCardioDisplay();
-            document.getElementById('cardio-status-label').textContent = "Listo para iniciar";
-        }
-
-        function updateCardioDisplay() {
-            const mins = Math.floor(cardioSeconds / 60);
-            const secs = cardioSeconds % 60;
-            document.getElementById('cardio-timer-display').textContent = 
-                `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }
-
-        // --- GRÁFICOS Y PROGRESO ---
+        let chartsInstance = {};
         function initCharts() {
-            // Peso corporal
             const ctxWeight = document.getElementById('chartBodyWeight').getContext('2d');
             chartsInstance.bodyWeight = new Chart(ctxWeight, {
                 type: 'line',
@@ -966,7 +1018,6 @@
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 } } }, x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 10 } } } } }
             });
 
-            // Entrenamientos semanales
             const ctxWeekly = document.getElementById('chartWeeklyWorkouts').getContext('2d');
             chartsInstance.weeklyWorkouts = new Chart(ctxWeekly, {
                 type: 'bar',
@@ -974,11 +1025,10 @@
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 } }, beginAtZero: true, max: 5 }, x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 10 } } } } }
             });
 
-            // Ejercicio progreso
             const ctxEx = document.getElementById('chartExerciseProgress').getContext('2d');
             chartsInstance.exerciseProgress = new Chart(ctxEx, {
                 type: 'line',
-                data: { labels: [], datasets: [{ label: 'Max Reps / Peso', data: [], borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', tension: 0.3, fill: true }] },
+                data: { labels: [], datasets: [{ label: 'Max Reps', data: [], borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', tension: 0.3, fill: true }] },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 } } }, x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 10 } } } } }
             });
 
@@ -987,17 +1037,14 @@
         }
 
         function updateChartsData() {
-            // Peso corporal
             chartsInstance.bodyWeight.data.labels = appState.bodyWeights.map(b => b.date);
             chartsInstance.bodyWeight.data.datasets[0].data = appState.bodyWeights.map(b => b.weight);
             chartsInstance.bodyWeight.update();
 
-            // Entrenamientos semanales
             let weeklyCounts = [0,0,0,0,0,0,0,0];
             const start = new Date(appState.startDate);
             appState.history.forEach(h => {
-                const hDate = new Date(h.date);
-                const diffDays = Math.floor((hDate - start) / (1000 * 60 * 60 * 24));
+                const diffDays = Math.floor((new Date(h.date) - start) / (1000 * 60 * 60 * 24));
                 const wIdx = Math.floor(diffDays / 7);
                 if (wIdx >= 0 && wIdx < 8) weeklyCounts[wIdx]++;
             });
@@ -1008,14 +1055,9 @@
         function populateExerciseProgressSelect() {
             const select = document.getElementById('progress-exercise-select');
             const exercisesSet = new Set();
-            appState.history.forEach(h => {
-                h.results.forEach(r => exercisesSet.add(r.name));
-            });
-
+            appState.history.forEach(h => h.results.forEach(r => exercisesSet.add(r.name)));
             let html = '';
-            exercisesSet.forEach(exName => {
-                html += `<option value="${exName}">${exName}</option>`;
-            });
+            exercisesSet.forEach(exName => html += `<option value="${exName}">${exName}</option>`);
             select.innerHTML = html;
             renderExerciseProgressChart();
         }
@@ -1024,18 +1066,13 @@
             const select = document.getElementById('progress-exercise-select');
             const exName = select?.value;
             if (!exName) return;
-
-            const labels = [];
-            const dataVals = [];
-            let maxReps = 0;
-            let maxWeight = 0;
+            const labels = [], dataVals = [];
+            let maxReps = 0, maxWeight = 0;
 
             appState.history.slice().reverse().forEach(h => {
                 const res = h.results.find(r => r.name === exName);
                 if (res) {
-                    const dateStr = new Date(h.date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-                    labels.push(dateStr);
-                    // Calcular métrica representativa (ej. max reps de las series o peso)
+                    labels.push(new Date(h.date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }));
                     let sessionMax = 0;
                     res.sets.forEach(s => {
                         const rCount = parseInt(s.reps || 0);
@@ -1060,14 +1097,12 @@
             `;
         }
 
-        // --- GESTIÓN DE PESO CORPORAL ---
         function openWeightModal() { document.getElementById('weight-modal').classList.remove('hidden'); }
         function closeWeightModal() { document.getElementById('weight-modal').classList.add('hidden'); }
         function saveBodyWeight() {
             const val = parseFloat(document.getElementById('input-new-weight').value);
             if (!isNaN(val)) {
-                const todayStr = new Date().toISOString().split('T')[0];
-                appState.bodyWeights.push({ date: todayStr, weight: val });
+                appState.bodyWeights.push({ date: new Date().toISOString().split('T')[0], weight: val });
                 saveData();
                 updateDashboard();
                 updateChartsData();
@@ -1075,7 +1110,6 @@
             }
         }
 
-        // --- CONFIGURACIÓN Y BACKUP JSON ---
         function openSettingsModal() { document.getElementById('settings-modal').classList.remove('hidden'); }
         function closeSettingsModal() { 
             document.getElementById('settings-modal').classList.add('hidden');
@@ -1104,18 +1138,14 @@
                         appState = parsed;
                         saveData();
                         location.reload();
-                    } else {
-                        alert('Archivo JSON no válido.');
                     }
-                } catch (err) {
-                    alert('Error al leer el archivo JSON.');
-                }
+                } catch (err) { alert('Error al leer el archivo JSON.'); }
             };
             reader.readAsText(file);
         }
 
         function resetAllData() {
-            if (confirm("¿Estás seguro de reiniciar todos tus datos e historial? Esta acción no se puede deshacer a menos que tengas un respaldo JSON.")) {
+            if (confirm("¿Estás seguro de reiniciar todos tus datos?")) {
                 localStorage.clear();
                 location.reload();
             }
